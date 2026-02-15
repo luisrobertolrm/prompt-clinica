@@ -1,0 +1,38 @@
+flowchart TD
+    A[Início do Chat] --> B[IA solicita CPF do Paciente]
+
+    B --> C{Paciente existe na base?}
+
+    C -- Não --> D[Cadastrar / Alterar Cliente]
+    D --> E[Cliente cadastrado]
+
+    C -- Sim --> F[Consultar Cliente]
+
+    E --> G[Apresentar Menu de Opções]
+    F --> G
+
+    G --> H{Opção escolhida}
+
+    H -- Marcar Consulta --> I[Solicitar dados:<br/>dia, especialidade, procedimento]
+    I --> I2[tool: marcar_consulta_procedimento]
+    I2 --> J[Retorna id_agenda e data]
+
+    H -- Desmarcar Consulta --> K[Solicitar id_agenda]
+    K --> K2[tool: desmarcar_consulta_procedimento]
+    K2 --> J2[Retorna sucesso]
+
+    H -- Confirmar Consulta --> L[Solicitar id_agenda]
+    L --> L2[tool: confirmar_consulta_procedimento]
+    L2 --> J3[Retorna sucesso]
+
+    H -- Consultar Consulta --> M[Solicitar filtros:<br/>dia, especialidade, procedimento]
+    M --> M2[tool: consular_consulta_procedimento]
+    M2 --> J4[Retorna dados da agenda]
+
+    J --> N{Deseja outra operação?}
+    J2 --> N
+    J3 --> N
+    J4 --> N
+
+    N -- Sim --> G
+    N -- Não --> O[Fim do Chat]
