@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant P as Paciente
+    participant IA as Clínica Médica (IA)
+    participant T as Tools
+
+    P->>IA: Iniciar chat
+    IA->>P: Solicitar CPF
+    P->>IA: Informar CPF
+
+    IA->>T: consultar_cliente(cpf)
+    T-->>IA: {id_usuario, nome}
+
+    IA->>P: Exibir menu de opções
+
+    P->>IA: Marcar consulta
+    IA->>T: marcar_consulta_procedimento(dia, id_usuario, id_especialidade, id_procedimento)
+    T-->>IA: {id_agenda, data, id_especialidade, id_procedimento}
+
+    IA->>P: Confirmação da agenda
+
+    P->>IA: Confirmar consulta
+    IA->>T: confirmar_consulta_procedimento(id_agenda)
+    T-->>IA: {sucesso: true}

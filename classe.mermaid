@@ -1,0 +1,15 @@
+classDiagram
+    class Tools {
+        +marcar_consulta_procedimento(dia, id_usuario, id_especialidade, id_procedimento)
+        +desmarcar_consulta_procedimento(dia, id_agenda)
+        +confirmar_consulta_procedimento(id_agenda)
+    }
+
+    class RetornoMarcarConsulta {
+        id_agenda : int
+        data : DateTime
+        id_especialidade : int
+        id_procedimento : int
+    }
+
+    Tools --> RetornoMarcarConsulta
