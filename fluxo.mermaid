@@ -1,34 +1,52 @@
 flowchart TD
-    A[Início do Chat] --> B[IA solicita CPF do Paciente]
+    A[Início do Chat] --> B[IA solicita CPF do Cliente]
 
-    B --> C{Paciente existe na base?}
+    B --> C[tool: consultar_cliente]
+    C --> D{Cliente encontrado?}
 
-    C -- Não --> D[Cadastrar / Alterar Cliente]
-    D --> E[Cliente cadastrado]
+    D -- Sim --> G[Apresentar Menu de Opções]
 
-    C -- Sim --> F[Consultar Cliente]
-
-    E --> G[Apresentar Menu de Opções]
+    D -- Não --> E[Solicitar dados do cliente]
+    E --> E2[tool: cadastrar_alterar_cliente]
+    E2 --> F[Retorna dados do cliente<br/>id_usuario]
     F --> G
 
+    %% ================= MENU =================
     G --> H{Opção escolhida}
 
-    H -- Marcar Consulta --> I[Solicitar dados:<br/>dia, especialidade, procedimento]
-    I --> I2[tool: marcar_consulta_procedimento]
-    I2 --> J[Retorna id_agenda e data]
+    %% ========== OPÇÃO 1 : MARCAR CONSULTA ==========
+    H -- 1 Marcar Consulta --> I[Solicitar texto da especialidade]
+    I --> I1[tool: consultar_especialidade_procedimento]
+    I1 --> I2[Apresenta lista para escolha]
 
-    H -- Desmarcar Consulta --> K[Solicitar id_agenda]
+    I2 --> I3{Escolha do paciente}
+
+    I3 -- Especialidade --> I4[Seleciona id_especialidade]
+    I3 -- Procedimento --> I5[Seleciona id_procedimento]
+
+    I4 --> I6[Solicitar dia da consulta]
+    I5 --> I6
+
+    I6 --> I7[tool: marcar_consulta_procedimento]
+    I7 --> J[Retorna:<br/>id_agenda<br/>data<br/>id_especialidade<br/>id_procedimento]
+
+    %% ========== OPÇÃO 2 ==========
+    H -- 2 Desmarcar Consulta --> K[Solicitar id_agenda e dia]
     K --> K2[tool: desmarcar_consulta_procedimento]
-    K2 --> J2[Retorna sucesso]
+    K2 --> J2[Retorna:<br/>sucesso: true]
 
-    H -- Confirmar Consulta --> L[Solicitar id_agenda]
+    %% ========== OPÇÃO 3 ==========
+    H -- 3 Confirmar Consulta --> L[Solicitar id_agenda]
     L --> L2[tool: confirmar_consulta_procedimento]
-    L2 --> J3[Retorna sucesso]
+    L2 --> J3[Retorna:<br/>sucesso: true]
 
-    H -- Consultar Consulta --> M[Solicitar filtros:<br/>dia, especialidade, procedimento]
+    %% ========== OPÇÃO 4 ==========
+    H -- 4 Consultar Consultas --> M[Solicitar filtros opcionais]
     M --> M2[tool: consular_consulta_procedimento]
-    M2 --> J4[Retorna dados da agenda]
+    M2 --> J4[Retorna lista de agendas:<br/>id_agenda<br/>data<br/>id_especialidade<br/>id_procedimento]
 
+
+    %% ========== LOOP ==========
     J --> N{Deseja outra operação?}
     J2 --> N
     J3 --> N
