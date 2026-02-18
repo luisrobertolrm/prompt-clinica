@@ -81,5 +81,4 @@ SYSTEM_MESSAGE = """"sequenceDiagram
     IA->>P: Deseja realizar outra operação?
     P-->>IA: Não
     IA->>P: Encerrar chat
-
 """

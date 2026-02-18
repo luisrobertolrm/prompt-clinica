@@ -10,7 +10,7 @@ from .tools import TOOLS
 
 def create_llm() -> BaseChatModel:
     # Modelo anterior não existe na API; usar um ID válido do OpenAI
-    return init_chat_model("gpt-3.5-turbo")
+    return init_chat_model(model="gpt-3.5-turbo", temperature=0)
 
 
 def execute_llm(state: State) -> State:

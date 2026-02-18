@@ -4,7 +4,6 @@ from collections.abc import Sequence
 from datetime import datetime, time
 
 from langchain.tools import BaseTool, tool
-from psycopg import Date
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -58,7 +57,7 @@ class EspecialidadeProcedimento(BaseModel):
 
 @tool
 def marcar_consulta_procedimento(
-    dia: datetime | Date,
+    dia: datetime,
     id_especialidade: int,
     id_procedimento: int,
 ) -> AgendaProcedimento:
