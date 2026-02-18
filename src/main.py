@@ -33,7 +33,7 @@ def main():
 
         resp_llm = graph.invoke({"messages": current_messages}, config=config)
 
-        print(resp_llm["messages"][-1].content)
+        print(resp_llm["messages"][-1].content.strip())
 
 
 if __name__ == "__main__":

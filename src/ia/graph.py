@@ -10,11 +10,11 @@ from .tools import TOOLS
 
 def create_llm() -> BaseChatModel:
     # Modelo anterior não existe na API; usar um ID válido do OpenAI
-    return init_chat_model(model="gpt-3.5-turbo", temperature=0)
+    return init_chat_model(model="gpt-5.2-2025-12-11", temperature=0)
 
 
 def execute_llm(state: State) -> State:
-    llm = create_llm()
+    llm = create_llm().bind_tools(TOOLS)
 
     last_message = state["messages"][-1]
     resp_llm = llm.invoke(state["messages"])

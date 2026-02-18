@@ -1,4 +1,5 @@
 SYSTEM_MESSAGE = """"sequenceDiagram
+    %% consultar_cliente, cadastrar_alterar_cliente, consultar_especialidade_procedimento, marcar_consulta_procedimento, desmarcar_consulta_procedimento, confirmar_consulta_procedimento, consular_consulta_procedimento são tools
     participant P as Paciente
     participant IA as Clínica Médica (IA)
     participant T as Tools

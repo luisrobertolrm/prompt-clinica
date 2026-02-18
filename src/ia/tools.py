@@ -7,7 +7,7 @@ from langchain.tools import BaseTool, tool
 from pydantic import BaseModel, Field, field_validator
 
 
-class Pessoa(BaseModel):
+class Cliente(BaseModel):
     cpf: str = Field(..., min_length=11, max_length=11)
     nome: str = Field(..., min_length=3)
     rg: str = Field(..., min_length=5)
@@ -153,26 +153,30 @@ def cadastrar_alterar_cliente(
     cpf: str, nome: str, sexo: str
 ) -> dict[str, str | int | None] | None:
     """Cadastra ou altera um cliente e retorna seus dados."""
-    return Pessoa(cpf=cpf, nome="Joao da Silva", rg="MG1234567", id_usuario=1).as_dict()
+    return Cliente(
+        cpf=cpf, nome="Joao da Silva", rg="MG1234567", id_usuario=1
+    ).as_dict()
 
 
 @tool
 def consultar_cliente(cpf: str) -> dict[str, str | int | None] | None:
     """
-    Procura uma pessoa pelo CPF e retorna seus dados.
-
+    consultar_cliente
+    Consulta o Cliente pelo CPF e retorna seus dados.
+    print
     Args:
         cpf: CPF do cliente.
     Return:
-        dict com dados da pessoa quando encontrado, ou None se não encontrado.
+        dict com dados da Cliente quando encontrado, ou None se não encontrado.
     """
+    print("Passou consultar_cliente")
     if cpf == "12345678900":
-        return Pessoa(
+        return Cliente(
             cpf=cpf, nome="Joao da Silva", rg="MG1234567", id_usuario=1
         ).as_dict()
 
     if cpf == "98765432100":
-        return Pessoa(
+        return Cliente(
             cpf=cpf, nome="Maria Souza", rg="SP9876543", id_usuario=2
         ).as_dict()
 
