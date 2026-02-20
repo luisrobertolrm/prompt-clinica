@@ -23,7 +23,7 @@ Homepage = "https://www.otaviomiranda.com.br/"
 
 [tool.ruff]
 line-length = 88
-target-version = "py311"
+target-version = "py313"
 fix = true
 show-fixes = true
 indent-width = 4
@@ -60,8 +60,8 @@ known-first-party = ["react_agent"]
 
 [tool.pyright]
 typeCheckingMode = "standard"
-pythonVersion = "3.11"
-include = ["src", "tests"]
+pythonVersion = "3.13"
+include = ["src", "tests", "models"]
 exclude = [
   "**/venv",
   "**/.venv",
@@ -72,7 +72,7 @@ exclude = [
 ]
 venv = ".venv"
 venvPath = "."
-executionEnvironments = [{ root = "src" }]
+executionEnvironments = [{ root = ".", extraPaths = ["src", "models"] }]
 
 [tool.pytest.ini_options]
 addopts = "-s --color=yes --tb=short"

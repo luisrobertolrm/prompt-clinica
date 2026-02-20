@@ -1,19 +1,21 @@
 from db import get_session
+from models.entities import TipoEspecialidade
 from repositories import Repository
-from models.entities import Documento
 
 with get_session() as session:
-    documentos = Repository(session, Documento)
+    tipos_esp = Repository(session, TipoEspecialidade)
 
     # INSERT
-    novo = documentos.add(Documento(conteudo=b"exemplo de binario"))
+    novo = tipos_esp.add(
+        TipoEspecialidade(descricao="Pediatria", duracao_consulta_padrao=20)
+    )
     print("Criado id:", novo.id)
 
-    # UPDATE
-    documentos.update(novo.id, {"conteudo": b"conteudo atualizado"})
-    atualizado = documentos.get(novo.id)
-    print("Conteudo apos update:", atualizado.conteudo)
+    # # UPDATE
+    # tipos_esp.update(novo.id, {"conteudo": b"conteudo atualizado"})
+    # atualizado = tipos_esp.get(novo.id)
+    # print("Conteudo apos update:", atualizado.conteudo)
 
     # DELETE
-    #documentos.delete(novo.id)
-    #print("Deletado?", documentos.get(novo.id) is None)
+    # documentos.delete(novo.id)
+    # print("Deletado?", documentos.get(novo.id) is None)
