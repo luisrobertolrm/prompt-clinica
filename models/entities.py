@@ -4,9 +4,9 @@ from datetime import date, datetime, time
 
 from sqlalchemy import (
     Boolean,
+    CheckConstraint,
     Date,
     DateTime,
-    Enum,
     ForeignKey,
     Identity,
     Integer,
@@ -113,16 +113,17 @@ class DisponibilidadeMedico(Base):
     hora_inicio: Mapped[time] = mapped_column(Time, nullable=False)
     hora_fim: Mapped[time] = mapped_column(Time, nullable=False)
     dia_semana: Mapped[int] = mapped_column(SmallInteger)
-    status: Mapped[StatusDisponibilidadeMedico] = mapped_column(
-        Enum(
-            StatusDisponibilidadeMedico,
-            name="status_disponibilidade_medico_enum",
-            native_enum=False,
-        ),
+    status: Mapped[int] = mapped_column(
+        SmallInteger,
         nullable=False,
+        default=StatusDisponibilidadeMedico.LIVRE.value,
     )
 
     medico: Mapped[Medico] = relationship(back_populates="disponibilidades", init=False)
+
+    __table_args__ = (
+        CheckConstraint("status in (0, 1, 2)", name="ck_disponibilidade_status"),
+    )
 
 
 # =========================================================
@@ -349,6 +350,15 @@ class Paciente(Base):
 
     pessoa: Mapped[Pessoa] = relationship(back_populates="paciente")
     ativo: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    def as_dict(self) -> dict[str, str | date | None]:
+        return {
+            "cpf": self.pessoa.cpf,
+            "nome": self.pessoa.nome,
+            "data_nascimento": self.pessoa.data_nascimento,
+            "sexo": self.pessoa.sexo,
+            "email": self.pessoa.email,
+        }
 
 
 # =========================================================

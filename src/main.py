@@ -1,8 +1,16 @@
+import sys
+from pathlib import Path
+
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.runnables import RunnableConfig
 
 # from langchain_core.tracers.stdout import FunctionCallbackHandler
 from rich.prompt import Prompt
+
+# Garante que o projeto raiz esteja no sys.path para importar db.py
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.append(str(PROJECT_ROOT))
 
 from ia.graph import configure_graph
 from ia.prompt import SYSTEM_MESSAGE

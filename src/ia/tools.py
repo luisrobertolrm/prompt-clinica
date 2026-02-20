@@ -1,10 +1,34 @@
 from __future__ import annotations
 
+import os
 from collections.abc import Sequence
-from datetime import datetime, time
+from datetime import date, datetime, time
 
 from langchain.tools import BaseTool, tool
 from pydantic import BaseModel, Field, field_validator
+from rich import print
+from sqlalchemy.engine.url import make_url
+
+from db import get_session
+from models import Paciente, Pessoa
+from repositories import Repository
+
+raw_url = os.getenv("DATABASE_URL", "")
+if raw_url:
+    masked_url = make_url(raw_url).set(password="***")
+    print("DATABASE_URL:", masked_url)
+
+
+class AgendaProcedimento(BaseModel):
+    id_agenda: int
+    data: datetime
+    id_especialidade: int
+    id_procedimento: int
+
+
+class EspecialidadeProcedimento(BaseModel):
+    id_especialidade: int
+    nome: str
 
 
 class Cliente(BaseModel):
@@ -41,18 +65,6 @@ class Cliente(BaseModel):
 
     def as_dict(self) -> dict[str, str | int | None]:
         return self.model_dump()
-
-
-class AgendaProcedimento(BaseModel):
-    id_agenda: int
-    data: datetime
-    id_especialidade: int
-    id_procedimento: int
-
-
-class EspecialidadeProcedimento(BaseModel):
-    id_especialidade: int
-    nome: str
 
 
 @tool
@@ -159,25 +171,37 @@ def cadastrar_alterar_cliente(
 
 
 @tool
-def consultar_cliente(cpf: str) -> dict[str, str | int | None] | None:
+def consultar_cliente(cpf: str) -> dict[str, str | date | None] | None:
     """
     consultar_cliente
     Consulta o Cliente pelo CPF e retorna seus dados.
     print
     Args:
         cpf: CPF do cliente.
+        nome, data_nascimento, sexo, cpf, email
     Return:
         dict com dados da Cliente quando encontrado, ou None se não encontrado.
     """
-    if cpf == "12345678900":
-        return Cliente(
-            cpf=cpf, nome="Joao da Silva", rg="MG1234567", id_usuario=1
-        ).as_dict()
 
-    if cpf == "98765432100":
-        return Cliente(
-            cpf=cpf, nome="Maria Souza", rg="SP9876543", id_usuario=2
-        ).as_dict()
+    print("Passou consultar_cliente")
+    cpf_digits = "".join(ch for ch in cpf if ch.isdigit())
+    if len(cpf_digits) != 11:
+        print(f"cpf inválido para busca: {cpf}")
+        return None
+
+    with get_session() as session:
+        repo_paciente = Repository(session, Paciente)
+
+        result = repo_paciente.select(Paciente.pessoa.has(Pessoa.cpf == cpf_digits))
+
+        paciente = result.first()  # primeiro registro ou None
+        print(f"{paciente=}")
+
+        if paciente is not None:
+            print("com Paciente")
+            return paciente.as_dict()
+
+    print(f"sem Paciente para cpf {cpf}")
 
     return None
 
