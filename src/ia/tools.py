@@ -169,7 +169,6 @@ def consultar_cliente(cpf: str) -> dict[str, str | int | None] | None:
     Return:
         dict com dados da Cliente quando encontrado, ou None se não encontrado.
     """
-    print("Passou consultar_cliente")
     if cpf == "12345678900":
         return Cliente(
             cpf=cpf, nome="Joao da Silva", rg="MG1234567", id_usuario=1
