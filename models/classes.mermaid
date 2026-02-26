@@ -1,128 +1,114 @@
-classDiagram
-    class Pessoa {
-        id: int
-        nome: str
-        data_nascimento: date
-        sexo: str
-        cpf: str
-        email: str
+erDiagram
+
+    PESSOA {
+        int id PK
+        string nome
+        date data_nascimento
+        string sexo
+        string cpf
+        string email
     }
 
-    class Medico {
-        id: int
-        crm: str
-        uf_crm: str
-        data_criacao: datetime
-        data_inativacao: datetime
-        id_pessoa: int
+    MEDICO {
+        int id PK
+        string crm
+        string uf_crm
+        datetime data_criacao
+        datetime data_inativacao
+        int id_pessoa FK
     }
 
-    class DisponibilidadeMedico {
-        id: int
-        id_medico: int
-        data_inicio: date
-        data_fim: date
-        hora_inicio: time
-        hora_fim: time
-        dia_semana: int
-        status: StatusDisponibilidadeMedico
+    PACIENTE {
+        int id_pessoa PK, FK
+        boolean ativo
     }
 
-    class TipoEspecialidade {
-        id: int
-        descricao: str
-        duracao_consulta_padrao: int
-        embedding: str
+    TELEFONE {
+        int id PK
+        int id_pessoa FK
+        string numero
+        int ddd
     }
 
-    class MedicoEspecialidade {
-        id: int
-        id_medico: int
-        id_tipo_especialidade: int
-        duracao_consulta: int
-        data_criacao: datetime
-        data_inativacao: datetime
+    DOCUMENTO {
+        int id PK
+        int id_pessoa FK
+        int id_tipo_documento
+        string numero
     }
 
-    class Consulta {
-        id: int
-        id_funcionario: int
-        id_paciente: int
-        id_tipo_especialidade: int
-        id_medico: int
-        data_consulta: datetime
-        observacao: str
-        data_criacao: datetime
-        data_inativacao: datetime
+    DISPONIBILIDADE_MEDICO {
+        int id PK
+        int id_medico FK
+        date data_inicio
+        date data_fim
+        time hora_inicio
+        time hora_fim
+        int dia_semana
+        int status
     }
 
-    class TipoProcedimento {
-        id: int
-        descricao: str
-        embedding: str
+    TIPO_ESPECIALIDADE {
+        int id PK
+        string descricao
+        int duracao_consulta_padrao
+        string embedding
     }
 
-    class Procedimento {
-        id: int
-        id_medico: int
-        id_tipo_procedimento: int
-        observacao: str
+    MEDICO_ESPECIALIDADE {
+        int id PK
+        int id_medico FK
+        int id_tipo_especialidade FK
+        int duracao_consulta
+        datetime data_criacao
+        datetime data_inativacao
     }
 
-    class MedicoProcedimento {
-        id: int
-        id_medico: int
-        id_tipo_procedimento: int
-        data: date
+    CONSULTA {
+        int id PK
+        int id_funcionario
+        int id_paciente
+        int id_tipo_especialidade FK
+        int id_medico FK
+        datetime data_consulta
+        string observacao
     }
 
-    class Telefone {
-        id: int
-        id_pessoa: int
-        numero: str
-        ddd: int
-        data_criacao: datetime
-        data_inativacao: datetime
+    TIPO_PROCEDIMENTO {
+        int id PK
+        string descricao
+        string embedding
     }
 
-    class Paciente {
-        id_pessoa: int
-        ativo: bool
+    PROCEDIMENTO {
+        int id PK
+        int id_medico FK
+        int id_tipo_procedimento FK
+        string observacao
     }
 
-    class Documento {
-        id: int
-        id_tipo_documento: int
-        id_pessoa: int
-        numero: str
+    MEDICO_PROCEDIMENTO {
+        int id PK
+        int id_medico FK
+        int id_tipo_procedimento FK
+        date data
     }
 
-    Pessoa "1" --> "0..1" Medico
-    Pessoa "1" --> "0..1" Paciente
-    Pessoa "1" --> "0..*" Telefone
-    Pessoa "1" --> "0..*" Documento
+    %% RELACIONAMENTOS
 
-    Medico "1" --> "0..*" Consulta
-    Medico "1" --> "0..*" DisponibilidadeMedico
-    Medico "1" --> "0..*" MedicoEspecialidade
-    Medico "1" --> "0..*" MedicoProcedimento
-    Medico "1" --> "0..*" Procedimento
+    PESSOA ||--o| MEDICO : "possui"
+    PESSOA ||--o| PACIENTE : "é"
+    PESSOA ||--o{ TELEFONE : "tem"
+    PESSOA ||--o{ DOCUMENTO : "tem"
 
-    TipoEspecialidade "1" --> "0..*" Consulta
-    TipoEspecialidade "1" --> "0..*" MedicoEspecialidade
+    MEDICO ||--o{ DISPONIBILIDADE_MEDICO : "define"
+    MEDICO ||--o{ CONSULTA : "realiza"
+    MEDICO ||--o{ MEDICO_ESPECIALIDADE : "possui"
+    MEDICO ||--o{ PROCEDIMENTO : "executa"
+    MEDICO ||--o{ MEDICO_PROCEDIMENTO : "associa"
 
-    TipoProcedimento "1" --> "0..*" Procedimento
-    TipoProcedimento "1" --> "0..*" MedicoProcedimento
+    TIPO_ESPECIALIDADE ||--o{ MEDICO_ESPECIALIDADE : "relaciona"
+    TIPO_ESPECIALIDADE ||--o{ CONSULTA : "classifica"
 
-    MedicoEspecialidade "*" --> "1" Medico
-    MedicoEspecialidade "*" --> "1" TipoEspecialidade
-
-    MedicoProcedimento "*" --> "1" Medico
-    MedicoProcedimento "*" --> "1" TipoProcedimento
-
-    Procedimento "*" --> "1" TipoProcedimento
-    Procedimento "*" --> "0..1" Medico
-
-    Telefone "*" --> "1" Pessoa
-    Documento "*" --> "1" Pessoa
-    Paciente "1" --> "1" Pessoa
+    TIPO_PROCEDIMENTO ||--o{ PROCEDIMENTO : "define"
+    TIPO_PROCEDIMENTO ||--o{ MEDICO_PROCEDIMENTO : "define"

@@ -3,9 +3,12 @@ from pathlib import Path
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.runnables import RunnableConfig
+from rich import print
 
 # from langchain_core.tracers.stdout import FunctionCallbackHandler
 from rich.prompt import Prompt
+
+from ia.state import State
 
 # Garante que o projeto raiz esteja no sys.path para importar db.py
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -13,7 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 from ia.graph import configure_graph
-from ia.prompt import SYSTEM_MESSAGE
+from ia.prompt import SYSTEM_MESSAGE_CADASTRO
 
 
 def main():
@@ -35,13 +38,15 @@ def main():
         msg = HumanMessage(content=text)
 
         if len(current_messages) == 0:
-            current_messages = [SystemMessage(SYSTEM_MESSAGE), msg]
+            current_messages = [SystemMessage(SYSTEM_MESSAGE_CADASTRO), msg]
         else:
             current_messages = [msg]
 
-        resp_llm = graph.invoke({"messages": current_messages}, config=config)
+        state = State(messages=current_messages)
+        resp_llm = graph.invoke(state, config=config)
 
-        print(resp_llm["messages"][-1].content.strip())
+        print(resp_llm["messages"][-1].content)
+        print(resp_llm)
 
 
 if __name__ == "__main__":

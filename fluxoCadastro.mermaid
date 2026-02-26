@@ -1,0 +1,14 @@
+flowchart TD
+    A[Início do Chat] --> B[IA solicita CPF do Cliente]
+
+    B --> C[tool: consultar_cliente]
+    C --> D{Cliente encontrado?}
+
+    D -- Sim --> G[tool: atualizar_state_paciente]
+    G --> O[Fim do Chat]
+
+    D -- Não --> E[Solicitar dados do cliente]
+    E --> E2[tool: cadastrar_alterar_cliente]
+    E2 --> F[Retorna dados do cliente<br/>id_usuario]
+    F --> H[tool: atualizar_state_paciente]
+    H --> O[Fim do Chat]
