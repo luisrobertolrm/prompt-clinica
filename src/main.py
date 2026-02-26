@@ -16,7 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 from ia.graph import configure_graph
-from ia.prompt import SYSTEM_MESSAGE_CADASTRO
+from ia.prompt import SYSTEM_MESSAGE, SYSTEM_MESSAGE_CADASTRO
 
 
 def main():
@@ -42,11 +42,18 @@ def main():
         else:
             current_messages = [msg]
 
-        state = State(messages=current_messages)
-        resp_llm = graph.invoke(state, config=config)
+        resp_llm = graph.invoke(State(messages=current_messages), config=config)
 
         print(resp_llm["messages"][-1].content)
-        print(resp_llm)
+
+        paciente = resp_llm.get("paciente")
+
+        if paciente is not None:
+            msg = HumanMessage(content=str(paciente))
+            current_messages = [SystemMessage(SYSTEM_MESSAGE), msg]
+            resp_llm = graph.invoke(State(messages=current_messages), config=config)
+
+            print(resp_llm["messages"][-1].content)
 
 
 if __name__ == "__main__":
