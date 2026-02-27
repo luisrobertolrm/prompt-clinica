@@ -23,6 +23,7 @@ class EspecialidadeProcedimento(BaseModel):
 class DisponibilidadeAgenda(BaseModel):
     id_medico: int
     id_especialidade_procedimento: int
+    nome_medico: str | None
     tipo: int
     data: datetime
 

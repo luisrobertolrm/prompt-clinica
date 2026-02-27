@@ -10,7 +10,7 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from pydantic import ValidationError
 
 from .state import Cliente, State
-from .tools import TOOLS
+from .tools import TOOLS, TOOLS_MENU
 
 
 # model="gpt-4.1-mini",
@@ -29,7 +29,16 @@ def execute_llm(state: State) -> State:
     return {"messages": [resp_llm], "paciente": state.get("paciente")}
 
 
+def execute_llm_menu(state: State) -> State:
+    llm = create_llm().bind_tools(TOOLS_MENU)
+
+    last_message = state["messages"][-1]
+    resp_llm = llm.invoke(state["messages"])
+    return {"messages": [resp_llm], "paciente": state.get("paciente")}
+
+
 node_tool = ToolNode(TOOLS)
+node_tool_menu = ToolNode(TOOLS_MENU)
 
 
 def atualizar_state_paciente_node(state: State) -> State:
@@ -83,7 +92,7 @@ def atualizar_state_paciente_node(state: State) -> State:
     return {"messages": state["messages"], "paciente": cliente}
 
 
-def configure_graph() -> CompiledStateGraph:
+def configure_graph_cadastro() -> CompiledStateGraph:
     config_graph = StateGraph(State)
 
     config_graph.add_node("execute_llm", execute_llm)
@@ -94,5 +103,20 @@ def configure_graph() -> CompiledStateGraph:
     config_graph.add_conditional_edges("execute_llm", tools_condition, ["tools", END])
     config_graph.add_edge("tools", "atualizar_state_paciente")
     config_graph.add_edge("atualizar_state_paciente", END)
+
+    return config_graph.compile(checkpointer=InMemorySaver())
+
+
+def configure_graph_menu() -> CompiledStateGraph:
+    config_graph = StateGraph(State)
+
+    config_graph.add_node("execute_llm_menu", execute_llm_menu)
+    config_graph.add_node("tools", node_tool_menu)
+
+    config_graph.add_edge(START, "execute_llm_menu")
+    config_graph.add_conditional_edges(
+        "execute_llm_menu", tools_condition, ["tools", END]
+    )
+    config_graph.add_edge("execute_llm_menu", END)
 
     return config_graph.compile(checkpointer=InMemorySaver())

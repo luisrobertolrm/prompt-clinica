@@ -105,6 +105,7 @@ def consultar_agenda_disponibilidade(
                                 id_especialidade_procedimento=id_especialidade_procedimento,
                                 tipo=tipo,
                                 data=horario_atual,
+                                nome_medico=disp.medico.pessoa.nome,
                             )
                         )
                         horario_atual += timedelta(minutes=duracao_minutos)
@@ -356,14 +357,20 @@ def consultar_especialidade_procedimento(especialidade: str):
 
 
 TOOLS: Sequence[BaseTool] = [
+    cadastrar_alterar_cliente,
+    consultar_cliente,
+]
+
+TOOLS_MENU: Sequence[BaseTool] = [
     marcar_consulta_procedimento,
     desmarcar_consulta_procedimento,
     confirmar_consulta_procedimento,
     consular_consulta_procedimento,
-    cadastrar_alterar_cliente,
-    consultar_cliente,
     consultar_especialidade_procedimento,
     consultar_agenda_disponibilidade,
 ]
 
 TOOLS_BY_NAME: dict[str, BaseTool] = {tool_obj.name: tool_obj for tool_obj in TOOLS}
+TOOLS_BY_NAME_MENU: dict[str, BaseTool] = {
+    tool_obj.name: tool_obj for tool_obj in TOOLS_MENU
+}

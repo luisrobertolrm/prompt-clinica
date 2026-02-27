@@ -71,7 +71,7 @@ class Medico(Base):
     )
 
     id_pessoa: Mapped[int | None] = mapped_column(ForeignKey("pessoa.id"), init=False)
-    pessoa: Mapped[Pessoa | None] = relationship(back_populates="medico", init=False)
+    pessoa: Mapped[Pessoa] = relationship(back_populates="medico", init=False)
 
     consultas: Mapped[list[Consulta]] = relationship(
         back_populates="medico", init=False

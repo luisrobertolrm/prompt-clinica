@@ -15,6 +15,7 @@ A[Início do Chat] --> G[Apresentar Menu de Opções]
     I3 -- Procedimento --> I5[Seleciona id_procedimento]
 
     %% ===== CONSULTAR AGENDA =====
+    %% ===== FORMATAR A SAIDA DA FERRAMENTA consultar_agenda_disponibilidade APRESENTANDO MEDICO - DIA - TODOS HORÁRIOS DO DIA =====
     I4 --> I6[tool: consultar_agenda_disponibilidade<br/>params:<br/>id_especialidade_procedimento<br/>tipo]
     I5 --> I6
 
