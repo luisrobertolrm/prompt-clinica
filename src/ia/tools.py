@@ -3,8 +3,10 @@ from __future__ import annotations
 import os
 from collections.abc import Sequence
 from datetime import datetime, time, timedelta
+from typing import Any
 
 from langchain.tools import BaseTool, tool
+from py_linq import Enumerable
 from rich import print
 from sqlalchemy import select
 from sqlalchemy.engine.url import make_url
@@ -40,14 +42,19 @@ if raw_url:
 @tool
 def consultar_agenda_disponibilidade(
     id_especialidade_procedimento: int, tipo: int
-) -> list[DisponibilidadeAgenda]:
+) -> list[dict[str, Any]]:
     """Lista slots disponíveis nas próximas duas semanas em blocos de 20 minutos.
 
     Args:
         id_especialidade_procedimento: identificador da especialidade (tipo=1) ou procedimento (tipo=2).
         tipo: 1 para especialidade, 2 para procedimento.
     Return:
-        Lista de DisponibilidadeAgenda com horário, médico e tipo.
+        Lista de dicionários conforme o agrupamento do py_linq.
+        Cada item tem a forma:
+        {
+            "medico": {"id": int, "nome": str | None},
+            "datas": list[datetime]
+        }
     """
     hoje = datetime.now().date()
     limite = hoje + timedelta(days=14)
@@ -113,7 +120,23 @@ def consultar_agenda_disponibilidade(
                 dia_atual += timedelta(days=1)
 
     slots.sort(key=lambda item: (item.data, item.id_medico))
-    return slots
+
+    resultado = (
+        Enumerable(disponibilidades)  # type: ignore[misc]  # py_linq stubs marcam como módulo, mas é chamável
+        .group_by(
+            ["id_medico", "nome_medico"],
+            lambda p: (p.id_medico, p.medico.pessoa.nome if p.medico else None),
+        )
+        .select(
+            lambda g: {
+                "medico": {"id": g.key.id_medico, "nome": g.key.nome_medico},
+                "datas": [d.data_inicio for d in g],
+            }
+        )
+        .to_list()
+    )
+
+    return resultado
 
 
 @tool

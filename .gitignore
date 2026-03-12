@@ -9,3 +9,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Kiro settings with secrets
+.kiro/settings/
