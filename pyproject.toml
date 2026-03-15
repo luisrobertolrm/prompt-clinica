@@ -17,6 +17,8 @@ dependencies = [
     "pyppeteer>=0.0.25",
     "rich>=14.3.2",
     "sqlalchemy>=2.0.46",
+    "pyright>=1.1.390",
+    "ruff>=0.8.4",
 ]
 
 [project.urls]
@@ -38,7 +40,6 @@ ignore = [
   "COM812", # Checks for the absence of trailing commas.
   "INP001", # Checks for packages that are missing an __init__.py file.
   "D",      # All pydocstyle (D)
-  "ANN401", # Checks that function arguments are annotated with a more specific type than Any.
   "ERA001", # Checks for commented-out Python code.
   "A004",   # Shadowing Python Builtin
   "RUF005",
@@ -60,7 +61,7 @@ line-ending = "lf"
 known-first-party = ["react_agent"]
 
 [tool.pyright]
-typeCheckingMode = "standard"
+typeCheckingMode = "strict"
 pythonVersion = "3.13"
 include = ["src", "tests", "models"]
 exclude = [
@@ -74,6 +75,18 @@ exclude = [
 venv = ".venv"
 venvPath = "."
 executionEnvironments = [{ root = ".", extraPaths = ["src", "models"] }]
+reportAny = "error"
+reportImplicitStringConcatenation = "error"
+reportMissingTypeStubs = "warning"
+reportUnknownArgumentType = "error"
+reportUnknownLambdaType = "error"
+reportUnknownMemberType = "error"
+reportUnknownParameterType = "error"
+reportUnknownVariableType = "error"
+reportUnnecessaryTypeIgnoreComment = "warning"
+reportUntypedBaseClass = "error"
+reportUntypedClassDecorator = "error"
+reportUntypedFunctionDecorator = "error"
 
 [tool.pytest.ini_options]
 addopts = "-s --color=yes --tb=short"

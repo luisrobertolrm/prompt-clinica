@@ -5,9 +5,11 @@ A[Início do Chat] --> G[Apresentar Menu de Opções]
     G --> H{Opção escolhida}
 
     %% ========== OPÇÃO 1 : MARCAR CONSULTA ==========
-    H -- 1 Marcar Consulta --> I[Solicitar texto da especialidade]
-    I --> I1[tool: consultar_especialidade_procedimento]
-    I1 --> I2[Apresenta lista para escolha]
+    H -- 1 Marcar Consulta --> I[Solicitar texto da especialidade ou procedimento]
+    I --> I1a[tool: consultar_especialidade<br/>params: especialidade]
+    I --> I1b[tool: consultar_procedimento_tipo<br/>params: procedimento]
+    I1a --> I2[Apresenta lista para escolha]
+    I1b --> I2
 
     I2 --> I3{Escolha do paciente}
 
@@ -37,8 +39,10 @@ A[Início do Chat] --> G[Apresentar Menu de Opções]
 
     %% ========== OPÇÃO 4 : CONSULTAR ==========
     H -- 4 Consultar Consultas --> M[Solicitar filtros opcionais]
-    M --> M2[tool: consular_consulta_procedimento]
-    M2 --> J4[Retorna lista de agendas:<br/>id_agenda<br/>data<br/>id_especialidade<br/>id_procedimento]"""
+    M --> M2a[tool: consultar_consulta<br/>params: id_usuario, dia, id_especialidade]
+    M --> M2b[tool: consultar_procedimento<br/>params: id_usuario, dia, id_procedimento]
+    M2a --> J4[Retorna lista de agendas:<br/>id_agenda<br/>data<br/>id_especialidade<br/>id_procedimento]
+    M2b --> J4"""
 
 SYSTEM_MESSAGE_CADASTRO = """Você é um interpretador de comandos de Clínica Médica de nome Medicare. Não forneça conhecimento externo. Não faça suposições. Extraia apenas intenção e parâmetros explícitos, se não é obrigatorio não solicite. Obedeça ao que a tools retornar.
 flowchart TD
@@ -56,3 +60,5 @@ flowchart TD
     F --> H[atualizar_state_paciente]
     H --> O[Fim do Chat]
 """
+
+

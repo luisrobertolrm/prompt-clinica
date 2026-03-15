@@ -222,22 +222,20 @@ def confirmar_consulta_procedimento(id_agenda: int):
 
 
 @tool
-def consular_consulta_procedimento(
+def consultar_consulta(
     id_usuario: int,
     dia: datetime | None,
     id_especialidade: int | None,
-    id_procedimento: int | None,
 ) -> Sequence[AgendaProcedimento]:
     """
-    Consulta agendas disponíveis para o usuário.
+    Consulta agendas de consulta (especialidade) disponíveis para o usuário.
 
     Args:
-        dia: data base para busca.
         id_usuario: identificador do paciente.
+        dia: data base para busca.
         id_especialidade: identificador da especialidade.
-        id_procedimento: identificador do procedimento.
     Return:
-        Lista simulada de AgendaProcedimento.
+        Lista de AgendaProcedimento.
     """
     base = (
         datetime.combine(dia.date(), time(hour=9, minute=0))
@@ -246,18 +244,56 @@ def consular_consulta_procedimento(
     )
 
     especialidade = id_especialidade if id_especialidade is not None else 0
-    procedimento = id_procedimento if id_procedimento is not None else 0
     return [
         AgendaProcedimento(
             id_agenda=1,
             data=base,
             id_especialidade=especialidade,
-            id_procedimento=procedimento,
+            id_procedimento=0,
         ),
         AgendaProcedimento(
             id_agenda=2,
             data=base.replace(hour=10),
             id_especialidade=especialidade,
+            id_procedimento=0,
+        ),
+    ]
+
+
+@tool
+def consultar_procedimento(
+    id_usuario: int,
+    dia: datetime | None,
+    id_procedimento: int | None,
+) -> Sequence[AgendaProcedimento]:
+    """
+    Consulta agendas de procedimento disponíveis para o usuário.
+
+    Args:
+        id_usuario: identificador do paciente.
+        dia: data base para busca.
+        id_procedimento: identificador do procedimento.
+    Return:
+        Lista de AgendaProcedimento.
+    """
+    base = (
+        datetime.combine(dia.date(), time(hour=9, minute=0))
+        if isinstance(dia, datetime)
+        else datetime.combine(datetime.now().date(), time(hour=9, minute=0))
+    )
+
+    procedimento = id_procedimento if id_procedimento is not None else 0
+    return [
+        AgendaProcedimento(
+            id_agenda=1,
+            data=base,
+            id_especialidade=0,
+            id_procedimento=procedimento,
+        ),
+        AgendaProcedimento(
+            id_agenda=2,
+            data=base.replace(hour=10),
+            id_especialidade=0,
             id_procedimento=procedimento,
         ),
     ]
@@ -338,35 +374,48 @@ def consultar_cliente(cpf: str) -> dict[str, str | int | None] | None:
 
 
 @tool
-def consultar_especialidade_procedimento(especialidade: str):
+def consultar_especialidade(especialidade: str):
     """
-    Lista especialidades/procedimentos disponíveis.
+    Lista especialidades disponíveis.
 
     Args:
-        especialidade: texto para filtragem (não aplicado nesta simulação).
+        especialidade: texto para filtragem.
     Return:
-        Lista simulada de EspecialidadeProcedimento.
+        Lista de EspecialidadeProcedimento com tipo=1.
     """
     with get_session() as session:
         repo_espec = Repository(session, TipoEspecialidade)
-        repo_proc = Repository(session, Procedimento)
-
         filtro_esp = TipoEspecialidade.descricao.ilike(f"%{especialidade}%")
         especialidades = list(repo_espec.select(filtro_esp))
 
-        filtro_proc = Procedimento.tipo_procedimento.has(
-            TipoProcedimento.descricao.ilike(f"%{especialidade}%")
-        )
-        procedimentos = list(repo_proc.select(filtro_proc))
-
-        retorno: list[EspecialidadeProcedimento] = [
+        return [
             EspecialidadeProcedimento(
                 id_especialidade_procedimento=esp.id,
                 nome=esp.descricao,
                 tipo=1,
             )
             for esp in especialidades
-        ] + [
+        ]
+
+
+@tool
+def consultar_procedimento_tipo(procedimento: str):
+    """
+    Lista procedimentos disponíveis.
+
+    Args:
+        procedimento: texto para filtragem.
+    Return:
+        Lista de EspecialidadeProcedimento com tipo=2.
+    """
+    with get_session() as session:
+        repo_proc = Repository(session, Procedimento)
+        filtro_proc = Procedimento.tipo_procedimento.has(
+            TipoProcedimento.descricao.ilike(f"%{procedimento}%")
+        )
+        procedimentos = list(repo_proc.select(filtro_proc))
+
+        return [
             EspecialidadeProcedimento(
                 id_especialidade_procedimento=proc.id_tipo_procedimento,
                 nome=proc.tipo_procedimento.descricao,
@@ -375,8 +424,6 @@ def consultar_especialidade_procedimento(especialidade: str):
             for proc in procedimentos
             if proc.tipo_procedimento is not None
         ]
-
-    return retorno
 
 
 TOOLS: Sequence[BaseTool] = [
@@ -388,8 +435,10 @@ TOOLS_MENU: Sequence[BaseTool] = [
     marcar_consulta_procedimento,
     desmarcar_consulta_procedimento,
     confirmar_consulta_procedimento,
-    consular_consulta_procedimento,
-    consultar_especialidade_procedimento,
+    consultar_consulta,
+    consultar_procedimento,
+    consultar_especialidade,
+    consultar_procedimento_tipo,
     consultar_agenda_disponibilidade,
 ]
 

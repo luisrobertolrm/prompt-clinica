@@ -111,7 +111,7 @@ def configure_graph_menu() -> CompiledStateGraph:
     config_graph = StateGraph(State)
 
     config_graph.add_node("execute_llm_menu", execute_llm_menu)
-    config_graph.add_node("tools", node_tool_menu)
+    config_graph.add_node("tools", F)
 
     config_graph.add_edge(START, "execute_llm_menu")
     config_graph.add_conditional_edges(
