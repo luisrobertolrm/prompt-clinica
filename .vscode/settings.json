@@ -45,6 +45,8 @@
   "python.terminal.activateEnvironment": true,
   "python.languageServer": "Pylance",
   "python.venvPath": ".venv",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.useLibraryCodeForTypes": true
 
   // ðŸ›  FormataÃ§Ã£o e Lint
   "editor.defaultFormatter": "esbenp.prettier-vscode",

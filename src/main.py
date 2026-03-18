@@ -1,7 +1,6 @@
 import sys
 from pathlib import Path
 
-# Garante que o projeto raiz esteja no sys.path para importar db.py
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -12,8 +11,7 @@ from rich import print
 from rich.prompt import Prompt
 
 from ia.cadastro_handler import CadastroHandler
-from ia.graph import configure_graph_menu, create_llm
-from ia.prompt import SYSTEM_MESSAGE
+from ia.graph import graph_factory, create_llm
 from ia.state import State
 
 MENU_OPCOES = """
@@ -40,7 +38,7 @@ def exibir_menu() -> int:
     print(f"[bold yellow]O que você deseja?{MENU_OPCOES}")
 
     while True:
-        text = prompt.ask("[bold cyan]Você:")
+        text: str = prompt.ask("[bold cyan]Você:")
 
         if text.strip().lower() in ["sair", "quit", "exit"]:
             return 0
@@ -55,8 +53,7 @@ def exibir_menu() -> int:
         if conteudo.isdigit() and 1 <= int(conteudo) <= 6:
             return int(conteudo)
 
-        print(f"[bold yellow]Não entendi. Por favor, escolha uma das opções:{MENU_OPCOES}") a respota
-    Retornar 
+        print(f"[bold yellow]Não entendi. Por favor, escolha uma das opções:{MENU_OPCOES}")
 
 
 def recuperar_cliente() -> str | None:
@@ -64,7 +61,7 @@ def recuperar_cliente() -> str | None:
     prompt = Prompt()
 
     while True:
-        text = prompt.ask("[bold cyan]Você:")
+        text: str = prompt.ask("[bold cyan]Você:")
 
         if text.lower() in ["sair", "quit", "exit"]:
             print("Saindo ✋✋✋")
@@ -77,40 +74,37 @@ def recuperar_cliente() -> str | None:
 
         print(response.messages[-1].content)
 
+    return None
 
-def main():
+
+def main() -> None:
     config = RunnableConfig(configurable={"thread_id": 2})
     prompt = Prompt()
-    current_messages = []
+    current_messages: list[SystemMessage | HumanMessage] = []
 
-    paciente = recuperar_cliente()
-    graph = configure_graph_menu()
+    paciente: str | None = recuperar_cliente()
 
     if paciente is None:
-        print(
-            "[bold red]Não foi possível recuperar os dados do cliente. Encerrando o programa."
-        )
+        print("[bold red]Não foi possível recuperar os dados do cliente. Encerrando o programa.")
         return
+
+    opcao_escolhida: int = exibir_menu()
+    graph = graph_factory(opcao_escolhida)
 
     while True:
         if len(current_messages) == 0:
-            msg = HumanMessage("Apresente o menu")
             current_messages = [
-                SystemMessage(SYSTEM_MESSAGE),
                 SystemMessage("Sempre tratar o paciente pelo nome"),
                 SystemMessage("Dados do paciente = " + paciente),
-                msg,
             ]
         else:
-            text = prompt.ask("[bold cyan]Você:")
+            text: str = prompt.ask("[bold cyan]Você:")
             if text.lower() in ["sair", "quit", "exit"]:
                 print("Saindo ✋✋✋")
                 break
-            msg = HumanMessage(content=text)
-            current_messages = [msg]
+            current_messages = [HumanMessage(content=text)]
 
         resp_menu = graph.invoke(State(messages=current_messages), config=config)
-
         print(resp_menu["messages"][-1].content)
 
 

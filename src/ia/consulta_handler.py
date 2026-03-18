@@ -14,11 +14,10 @@ class CadastroResponse:
 
     messages: list[BaseMessage]
     cliente: Cliente | None
-    id_agenda: int | None
 
 
-class ConsultaHandler(cliente: Cliente):
-    """Gerencia o fluxo de marcção de consulta de cliente via LangGraph."""
+class ConsultaHandler:
+    """Gerencia o fluxo de marcação de consulta de cliente via LangGraph."""
 
     def __init__(self, thread_id: int = 1) -> None:
         self.config: RunnableConfig = RunnableConfig(

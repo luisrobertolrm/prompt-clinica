@@ -7,11 +7,16 @@ from langgraph.graph.message import add_messages
 from pydantic import BaseModel, Field, field_validator
 
 
-class AgendaProcedimento(BaseModel):
-    id_agenda: int
+class AgendaConsulta(BaseModel):
+    id_consulta: int
     data: datetime
     id_especialidade: int
-    id_procedimento: int | None
+
+
+class AgendaProcedimento(BaseModel):
+    id_procedimento: int
+    data: datetime
+    id_tipo_procedimento: int
 
 
 class EspecialidadeProcedimento(BaseModel):
@@ -69,3 +74,24 @@ class Cliente(BaseModel):
 class State(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
     paciente: NotRequired[Cliente | None]
+
+
+class StateAgendamento(TypedDict):
+    messages: Annotated[Sequence[BaseMessage], add_messages]
+    paciente: NotRequired[Cliente | None]
+    agendamento: NotRequired[AgendaConsulta | AgendaProcedimento | None]
+
+class StateAgendamento(TypedDict):
+    paciente: NotRequired[Cliente | None]
+    messages: Annotated[Sequence[BaseMessage], add_messages]
+    id_medico: int
+    nome_medico:str
+    id_consulta_procedimento:int
+    agenda_disponivel: NotRequired[dict[str, list[str]]]
+
+
+class AgendaViewModel(TypedDict):
+    id_medico: int
+    nome_medico:str
+    id_tipo_especialidade:int
+    agenda_disponivel: dict[str, list[str]]
