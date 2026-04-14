@@ -1,0 +1,101 @@
+<!-- PUBLIC HEADER -->
+<header class="public-header">
+  <div class="logo">
+    <span class="material-icons text-primary" style="font-size: 2rem;">favorite</span>
+    <span class="brand-name">Multi Med</span>
+  </div>
+  <nav class="public-nav">
+    <a href="#institucional">Sobre a Clínica</a>
+    <a href="#noticias">Avisos e Notícias</a>
+    <button class="btn btn-primary btn-login" [routerLink]="['/login']">
+      Entrar no Sistema
+    </button>
+  </nav>
+</header>
+
+<!-- HERO INSTITUCIONAL -->
+<section id="institucional" class="hero-section">
+  <div class="hero-content">
+    <span class="badge">Tecnologia em Saúde</span>
+    <h1>O futuro do seu atendimento médico no presente.</h1>
+    <p>A Multi Med eleva a sua saúde com agilidade, corpo clínico excelente e inteligência artificial à disposição para otimizar seus tratamentos.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary btn-lg" [routerLink]="['/login']">Acessar Meu Cadastro</button>
+      <button class="btn btn-outline btn-lg" (click)="toggleChat()">
+        <span class="material-icons">forum</span> Conversar Agora
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO DE NOTÍCIAS (API) -->
+<section id="noticias" class="news-section">
+  <div class="section-title">
+    <h2>Notícias e Informações</h2>
+    <p>Acompanhe o que acontece na Multi Med</p>
+  </div>
+  
+  <div class="news-grid">
+    <article class="news-card card" *ngFor="let n of noticias">
+      <div class="card-body">
+        <span class="news-date">{{ n.data }}</span>
+        <h3>{{ n.titulo }}</h3>
+        <p>{{ n.resumo }}</p>
+      </div>
+      <div class="news-action">
+        <a href="javascript:void(0)" class="read-more">Ler completamentamente <span class="material-icons">arrow_forward</span></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- FLOTAING CHATBOT BUBBLE -->
+<div class="chatbot-container" [class.chat-open]="isChatOpen">
+  
+  <!-- Janela do Chat -->
+  <div class="chat-window card" *ngIf="isChatOpen">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <img src="assets/chat-avatar.png" class="chat-avatar" alt="IA Avatar">
+        <div>
+          <h3>Assistente Multi Med</h3>
+          <span class="status-online">Online</span>
+        </div>
+      </div>
+      <button class="btn-close" (click)="toggleChat()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <div class="chat-messages">
+      <div *ngFor="let msg of chatMessages" class="chat-bubble" [ngClass]="msg.origem === 'ia' ? 'bubble-ia' : 'bubble-user'">
+        {{ msg.texto }}
+      </div>
+      
+      <div class="is-typing" *ngIf="isTyping">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" 
+             placeholder="Digite sua dúvida ou agendamento..." 
+             [(ngModel)]="chatInput" 
+             (keyup.enter)="sendMessage()">
+      <button class="btn-send" (click)="sendMessage()" [disabled]="!chatInput.trim() || isTyping">
+        <span class="material-icons">send</span>
+      </button>
+    </div>
+    <div class="chat-footer-cta">
+      <a [routerLink]="['/login']">Fazer Login para concluir ações sensíveis</a>
+    </div>
+  </div>
+
+  <!-- Botão Flutuante (Trigger) -->
+  <button class="chat-trigger pulsing-glow" (click)="toggleChat()" *ngIf="!isChatOpen">
+    <img src="assets/chat-avatar.png" class="trigger-avatar" alt="Avatar">
+  </button>
+
+</div>

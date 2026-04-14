@@ -15,7 +15,7 @@ export class LoginComponent {
   doLogin() {
     // Simula Autenticação
     localStorage.setItem('token', 'jwt_simulado_multi_med_123');
-    // Roteia pro sistema interno que iniciará na dashboard
-    this.router.navigate(['/dashboard']);
+    // Roteia pro sistema interno que iniciará na dashboard logada
+    this.router.navigate(['/app/dashboard']);
   }
 }
