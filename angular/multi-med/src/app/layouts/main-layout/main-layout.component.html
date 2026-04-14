@@ -21,7 +21,7 @@
           <img src="https://i.pravatar.cc/150?img=11" alt="Avatar Usuário">
         </div>
       </div>
-      <button class="btn-logout" [routerLink]="['/login']">
+      <button class="btn-logout" (click)="logout()">
         <span class="material-icons">logout</span>
         <span class="logout-text">Sair</span>
       </button>

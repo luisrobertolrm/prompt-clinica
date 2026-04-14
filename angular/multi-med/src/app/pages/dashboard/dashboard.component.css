@@ -1,0 +1,321 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+/* Header & Date Navigation */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.date-navigator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: var(--bg-slate);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.current-date-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.date-icon {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.date-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hoje-badge {
+  background-color: #dcfce3;
+  color: #166534;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-today {
+  height: 36px;
+  font-size: 0.875rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.bg-blue-50 {
+  background-color: #eff6ff;
+  border-color: #dbeafe;
+}
+
+.bg-blue-50 .material-icons {
+  color: var(--primary);
+}
+
+.stat-value {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+/* Timeline Layout */
+.agenda-timeline {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  padding: 1rem 0;
+}
+
+.agenda-slot {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+/* Gutter Temporal */
+.timestamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 60px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.time {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-slate);
+  padding: 0.5rem 0;
+  z-index: 2;
+  margin-top: 1rem;
+}
+
+.timeline-line {
+  position: absolute;
+  right: -24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--border-color);
+  z-index: 1;
+}
+
+.agenda-slot:first-child .timeline-line {
+  top: 1.5rem;
+}
+.agenda-slot:last-child .timeline-line {
+  bottom: 100%;
+}
+
+/* Slot Content (Cards) */
+.slot-card {
+  flex: 1;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.slot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.slot-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+}
+
+/* Variações de Status Baseado nas Cores Típidas */
+.status-livre {
+  border-left-color: #cbd5e1; /* slate-300 */
+  border-style: dashed;
+  background-color: transparent;
+  box-shadow: none;
+}
+.status-livre:hover {
+  transform: none;
+  background-color: var(--card-bg);
+}
+
+.status-agendado {
+  border-left-color: var(--text-secondary);
+}
+
+.status-triagem {
+  border-left-color: #f59e0b; /* amber-500 */
+}
+
+.status-atendimento {
+  border-left-color: var(--primary);
+  animation: sutilPulse 2s infinite;
+}
+
+.status-finalizado {
+  border-left-color: var(--success);
+  opacity: 0.7;
+}
+
+@keyframes sutilPulse {
+  0% { border-left-color: rgba(37, 99, 235, 1); }
+  50% { border-left-color: rgba(37, 99, 235, 0.4); }
+  100% { border-left-color: rgba(37, 99, 235, 1); }
+}
+
+/* Info do Paciente */
+.patient-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 250px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.patient-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.125rem;
+}
+
+.patient-type {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-slate);
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* Status Badge Interno */
+.slot-status-badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.status-triagem .slot-status-badge { color: #d97706; }
+.status-atendimento .slot-status-badge { color: var(--primary); }
+.status-finalizado .slot-status-badge { color: var(--success); }
+
+/* Ações */
+.slot-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Estado Livre */
+.free-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.btn-block-time {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+}
+
+/* Mobile Breakpoints */
+@media (max-width: 768px) {
+  .dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .slot-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .slot-actions {
+    width: 100%;
+  }
+  .slot-actions .btn {
+    width: 100%;
+  }
+}

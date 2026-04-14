@@ -13,7 +13,9 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   doLogin() {
-    // Simula a lógica de Auth e roteia pro sistema interno
-    this.router.navigate(['/pep']);
+    // Simula Autenticação
+    localStorage.setItem('token', 'jwt_simulado_multi_med_123');
+    // Roteia pro sistema interno que iniciará na dashboard
+    this.router.navigate(['/dashboard']);
   }
 }

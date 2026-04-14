@@ -1,0 +1,104 @@
+<div class="dashboard-wrapper">
+  
+  <!-- Header / Navigation do Dia -->
+  <div class="dash-header card">
+    <div class="date-navigator">
+      <button class="nav-btn" (click)="mudarDia(-1)" title="Dia Anterior">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      
+      <div class="current-date-info">
+        <span class="material-icons date-icon">calendar_today</span>
+        <h2 class="date-text">
+          {{ dataAtual | date:"EEEE, d 'de' MMMM 'de' yyyy" | titlecase }}
+        </h2>
+        <span class="hoje-badge" *ngIf="isHoje()">Hoje</span>
+      </div>
+
+      <button class="nav-btn" (click)="mudarDia(1)" title="Próximo Dia">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-outline btn-today" *ngIf="!isHoje()" (click)="voltarParaHoje()">
+        Voltar para Hoje
+      </button>
+      <div class="stats">
+        <div class="stat-item bg-blue-50">
+          <span class="material-icons">event_note</span>
+          <div>
+            <div class="stat-value">{{ agendaDoDia.length }}</div>
+            <div class="stat-label">Slots</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Core -->
+  <div class="agenda-timeline">
+    
+    <div class="agenda-slot" *ngFor="let item of agendaDoDia" [ngClass]="{'is-free': item.status === 'Livre', 'is-occupied': item.status !== 'Livre'}">
+      
+      <!-- Timestamp (Gutter) -->
+      <div class="timestamp">
+        <span class="time">{{ item.horario }}</span>
+        <div class="timeline-line"></div>
+      </div>
+
+      <!-- Card do Paciente ou Slot Livre -->
+      <div class="slot-card card" 
+           [ngClass]="{
+              'status-livre': item.status === 'Livre',
+              'status-agendado': item.status === 'Agendado',
+              'status-triagem': item.status === 'Triagem',
+              'status-atendimento': item.status === 'Em Atendimento',
+              'status-finalizado': item.status === 'Finalizado'
+           }">
+        
+        <div class="card-body slot-content">
+          <ng-container *ngIf="item.status !== 'Livre'; else slotLivre">
+            
+            <div class="patient-info">
+              <div class="avatar fallback-avatar">{{ item.paciente.charAt(0) }}</div>
+              <div class="details">
+                <h3 class="patient-name">{{ item.paciente }}</h3>
+                <span class="patient-type">{{ item.tipo }}</span>
+              </div>
+            </div>
+
+            <div class="slot-status-badge">
+              {{ item.status }}
+            </div>
+
+            <div class="slot-actions">
+              <button 
+                class="btn" 
+                [ngClass]="item.status === 'Em Atendimento' || item.status === 'Triagem' ? 'btn-primary' : 'btn-outline'"
+                (click)="iniciarProntuario(item)">
+                <span class="material-icons">medical_services</span>
+                Iniciar Prontuário
+              </button>
+            </div>
+
+          </ng-container>
+
+          <ng-template #slotLivre>
+            <div class="free-indicator">
+              <span class="material-icons">add_circle_outline</span>
+              <span class="free-text">Horário Livre</span>
+            </div>
+            <button class="btn btn-outline btn-block-time">
+              Bloquear
+            </button>
+          </ng-template>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

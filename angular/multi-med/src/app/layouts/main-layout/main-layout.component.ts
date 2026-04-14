@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router';
+import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 interface MenuItem {
@@ -23,12 +23,13 @@ export class MainLayoutComponent implements OnInit {
   userProfile = 'medico'; // Mockado
   
   menuItems: MenuItem[] = [
-    { titulo: 'Dashboard', rota: '/dashboard', icone: 'dashboard', showOnMobile: true, perfis: ['medico', 'funcionario', 'paciente'] },
-    { titulo: 'Prontuário', rota: '/pep', icone: 'medical_services', showOnMobile: false, perfis: ['medico'] },
-    { titulo: 'Agenda', rota: '/agenda', icone: 'event', showOnMobile: true, perfis: ['medico', 'funcionario'] }
+    { titulo: 'Dashboard/Agenda', rota: '/dashboard', icone: 'event', showOnMobile: true, perfis: ['medico', 'funcionario', 'paciente'] },
+    { titulo: 'Prontuário PEP', rota: '/pep', icone: 'medical_services', showOnMobile: false, perfis: ['medico'] },
   ];
 
   filteredMenu: MenuItem[] = [];
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.checkScreenSize();
@@ -62,5 +63,10 @@ export class MainLayoutComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }
