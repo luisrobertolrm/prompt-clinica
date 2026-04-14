@@ -1,6 +1,6 @@
 Usa o PostGres
 
-$env:DATABASE_URL="postgresql+psycopg2://postgres:post123%40@localhost:5432/ClinicaIA"
+$env:DATABASE_URL="postgresql+psycopg2://postgres:post123%40@localhost:5432/clinica"
 
 alembic revision --autogenerate -m "alteracao tabela"
 
