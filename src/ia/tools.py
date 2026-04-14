@@ -3,7 +3,6 @@ from __future__ import annotations
 import os
 from collections.abc import Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any
 
 from langchain.tools import BaseTool, tool
 from rich import print
@@ -29,9 +28,6 @@ from models import (
     MedicoProcedimento,
     Paciente,
     Pessoa,
-    Procedimento,
-    TipoEspecialidade,
-    TipoProcedimento,
 )
 from models.common import StatusDisponibilidadeMedico
 from repositories import Repository
@@ -135,7 +131,7 @@ def _agrupar_slots(slots: list[DisponibilidadeAgenda]) -> list[AgendaViewModel]:
         grupos[s.id_medico]["agenda_disponivel"].setdefault(dia, []).append(hora)
 
     retorno = list(grupos.values())
-    
+
     return retorno
 
 

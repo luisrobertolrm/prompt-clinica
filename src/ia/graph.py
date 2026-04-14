@@ -1,7 +1,7 @@
 import json
-from typing import Any
 from collections.abc import Sequence
-from langchain.chat_models import BaseChatModel
+from typing import Any
+
 from langchain.tools import BaseTool
 from langchain_core.messages import SystemMessage, ToolMessage
 from langgraph.checkpoint.memory import InMemorySaver
@@ -12,22 +12,18 @@ from pydantic import ValidationError
 
 from .llm_config import create_llm
 from .prompt import (
-    SYSTEM_MESSASE_CONFIRMAR_PROCEDIMENTO,
+    SYSTEM_MESSASE_CONFIRMAR_CONSULTA,
     SYSTEM_MESSASE_DESMARCAR_CONSULTA,
-    SYSTEM_MESSASE_DESMARCAR_PROCEDIMENTO,
     SYSTEM_MESSASE_MARCAR_CONSULTA,
     SYSTEM_MESSASE_MARCAR_PROCEDIMENTO,
-    SYSTEM_MESSASE_CONFIRMAR_CONSULTA,
 )
 from .state import AgendaConsulta, AgendaProcedimento, Cliente, State, StateAgendamento
 from .tools import (
     TOOLS,
     TOOLS_CONFIRMAR_CONSULTA,
-    TOOLS_CONFIRMAR_PROCEDIMENTO,
     TOOLS_CONSULTAR_AGENDA,
     TOOLS_CONSULTAR_ESPECIALIDADES,
     TOOLS_DESMARCAR_CONSULTA,
-    TOOLS_DESMARCAR_PROCEDIMENTO,
     TOOLS_MARCAR_CONSULTA,
     TOOLS_MARCAR_PROCEDIMENTO,
     TOOLS_MENU,

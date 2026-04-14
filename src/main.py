@@ -10,29 +10,13 @@ from langchain_core.runnables import RunnableConfig
 from rich import print
 from rich.prompt import Prompt
 
+from core_logic import MENU_OPCOES, identificar_opcao_menu
 from ia.cadastro_handler import CadastroHandler
-from ia.graph import graph_factory, create_llm
+from ia.graph import graph_factory
 from ia.state import State
-
-MENU_OPCOES = """
-1 - Marcar Consulta
-2 - Marcar Procedimento
-3 - Consultar Agenda
-4 - Desmarcar Consulta
-5 - Confirmar Consulta
-6 - Consultar Especialidades Disponíveis
-"""
-
-MENU_SYSTEM = (
-    "Você interpreta a intenção do usuário e retorna APENAS o número da opção "
-    "correspondente ao menu abaixo, sem texto adicional.\n"
-    + MENU_OPCOES
-    + "Se não conseguir identificar a opção, retorne 0."
-)
 
 
 def exibir_menu() -> int:
-    llm = create_llm()
     prompt = Prompt()
 
     print(f"[bold yellow]O que você deseja?{MENU_OPCOES}")
@@ -43,15 +27,10 @@ def exibir_menu() -> int:
         if text.strip().lower() in ["sair", "quit", "exit"]:
             return 0
 
-        resposta = llm.invoke([
-            SystemMessage(MENU_SYSTEM),
-            HumanMessage(text),
-        ])
+        opcao = identificar_opcao_menu(text)
 
-        conteudo: str = str(resposta.content).strip()
-
-        if conteudo.isdigit() and 1 <= int(conteudo) <= 6:
-            return int(conteudo)
+        if opcao is not None:
+            return opcao
 
         print(f"[bold yellow]Não entendi. Por favor, escolha uma das opções:{MENU_OPCOES}")
 
