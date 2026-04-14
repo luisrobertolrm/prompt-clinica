@@ -2,9 +2,14 @@ Usa o PostGres
 
 $env:DATABASE_URL="postgresql+psycopg2://postgres:post123%40@localhost:5432/clinica"
 
+```
 alembic revision --autogenerate -m "alteracao tabela"
+```
 
+```
+$env:DATABASE_URL='postgresql+psycopg2://postgres:post123%40@localhost:5432/clinica'
 alembic upgrade head
+```
 
 
 #Rodar o sistema  *ver se o main esta correto ou dentro de src, não rodei agora para testar*
