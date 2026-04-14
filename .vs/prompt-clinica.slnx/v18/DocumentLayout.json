@@ -1,37 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\ProjetosPython\\prompt-clinica\\",
+  "WorkspaceRootPath": "C:\\Git\\prompt-clinica\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\db.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\db.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:db.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\models\\base.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\models\\base.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:models\\base.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\models\\classes.mermaid||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\models\\classes.mermaid||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:models\\classes.mermaid||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\models\\common.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\models\\common.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:models\\common.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\models\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\models\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:models\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\repositories.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\repositories.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:repositories.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\src\\main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\src\\main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\ProjetosPython\\prompt-clinica\\src\\ia\\graph.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git\\prompt-clinica\\src\\ia\\graph.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\ia\\graph.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
     }
   ],
@@ -68,9 +68,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "classes.mermaid",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\models\\classes.mermaid",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\models\\classes.mermaid",
               "RelativeDocumentMoniker": "models\\classes.mermaid",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\models\\classes.mermaid",
+              "ToolTip": "C:\\Git\\prompt-clinica\\models\\classes.mermaid",
               "RelativeToolTip": "models\\classes.mermaid",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -81,9 +81,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "common.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\models\\common.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\models\\common.py",
               "RelativeDocumentMoniker": "models\\common.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\models\\common.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\models\\common.py",
               "RelativeToolTip": "models\\common.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
@@ -94,50 +94,47 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "__init__.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\models\\__init__.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\models\\__init__.py",
               "RelativeDocumentMoniker": "models\\__init__.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\models\\__init__.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\models\\__init__.py",
               "RelativeToolTip": "models\\__init__.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-02-28T05:46:20.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T05:46:20.129Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "base.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\models\\base.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\models\\base.py",
               "RelativeDocumentMoniker": "models\\base.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\models\\base.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\models\\base.py",
               "RelativeToolTip": "models\\base.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-02-28T05:46:15.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T05:46:15.682Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "repositories.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\repositories.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\repositories.py",
               "RelativeDocumentMoniker": "repositories.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\repositories.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\repositories.py",
               "RelativeToolTip": "repositories.py",
               "ViewState": "AgIAACcAAAAAAAAAAAAAABkAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-02-28T05:45:50.51Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T05:45:50.51Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "db.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\db.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\db.py",
               "RelativeDocumentMoniker": "db.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\db.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\db.py",
               "RelativeToolTip": "db.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-02-28T05:43:46.022Z",
               "EditorCaption": ""
@@ -146,22 +143,21 @@
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "graph.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\src\\ia\\graph.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\src\\ia\\graph.py",
               "RelativeDocumentMoniker": "src\\ia\\graph.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\src\\ia\\graph.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\src\\ia\\graph.py",
               "RelativeToolTip": "src\\ia\\graph.py",
               "ViewState": "AgIAAD8AAAAAAAAAAAAAAE8AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-02-28T05:43:04.821Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T05:43:04.821Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "main.py",
-              "DocumentMoniker": "E:\\ProjetosPython\\prompt-clinica\\src\\main.py",
+              "DocumentMoniker": "C:\\Git\\prompt-clinica\\src\\main.py",
               "RelativeDocumentMoniker": "src\\main.py",
-              "ToolTip": "E:\\ProjetosPython\\prompt-clinica\\src\\main.py",
+              "ToolTip": "C:\\Git\\prompt-clinica\\src\\main.py",
               "RelativeToolTip": "src\\main.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
