@@ -6,6 +6,8 @@ $env:DATABASE_URL="postgresql+psycopg2://postgres:post123%40@localhost:5432/clin
 alembic revision --autogenerate -m "alteracao tabela"
 ```
 
+
+senha post123@
 ```
 $env:DATABASE_URL='postgresql+psycopg2://postgres:post123%40@localhost:5432/clinica'
 alembic upgrade head
