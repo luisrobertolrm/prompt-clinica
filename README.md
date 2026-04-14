@@ -15,8 +15,9 @@ alembic upgrade head
 
 
 #Rodar o sistema  *ver se o main esta correto ou dentro de src, não rodei agora para testar*
+**Bug pequeno depois de informar o cpf só da um enter**
 ```
-uv run --env-file=".env" main.py
+ uv run --env-file=".env" src/main.py
 ```
 
 
