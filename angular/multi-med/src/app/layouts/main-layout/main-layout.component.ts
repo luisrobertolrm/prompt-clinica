@@ -23,8 +23,8 @@ export class MainLayoutComponent implements OnInit {
   userProfile = 'medico'; // Mockado
   
   menuItems: MenuItem[] = [
-    { titulo: 'Dashboard/Agenda', rota: '/dashboard', icone: 'event', showOnMobile: true, perfis: ['medico', 'funcionario', 'paciente'] },
-    { titulo: 'Prontuário PEP', rota: '/pep', icone: 'medical_services', showOnMobile: false, perfis: ['medico'] },
+    { titulo: 'Dashboard/Agenda', rota: '/app/dashboard', icone: 'event', showOnMobile: true, perfis: ['medico', 'funcionario', 'paciente'] },
+    { titulo: 'Prontuário PEP', rota: '/app/pep', icone: 'medical_services', showOnMobile: false, perfis: ['medico'] },
   ];
 
   filteredMenu: MenuItem[] = [];

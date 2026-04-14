@@ -85,6 +85,6 @@ export class DashboardComponent implements OnInit {
   iniciarProntuario(consulta: Consulta) {
     if(consulta.status === 'Livre') return;
     // O sistema real passaria queryParams com o ID!
-    this.router.navigate(['/pep']);
+    this.router.navigate(['/app/pep']);
   }
 }
