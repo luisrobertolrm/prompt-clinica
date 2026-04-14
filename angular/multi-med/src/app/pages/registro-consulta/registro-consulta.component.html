@@ -1,0 +1,127 @@
+<div class="pep-container">
+  
+  <!-- Cabeçalho (LGPD) -->
+  <header class="pep-header">
+    <div>
+      <h1 class="title">Registro de Consulta</h1>
+      <p class="subtitle">Paciente: João Silva | ID: 982374 (Conformidade LGPD)</p>
+    </div>
+    <div class="doctor-badge">
+      <div class="doctor-info">
+        <span class="doctor-name">Dr. Roberto (Cardiologia)</span>
+        <span class="doctor-crm">CRM: 12345-SP</span>
+      </div>
+      <span class="material-icons info-icon">admin_panel_settings</span>
+    </div>
+  </header>
+
+  <div class="pep-grid">
+    <!-- Esquerda: Anamnese e Captação de Voz -->
+    <div class="col-main">
+      <div class="card shadow">
+        <div class="card-header border-bottom">
+          <h2 class="card-title">
+            <span class="material-icons title-icon blue">mic</span>
+            Anamnese e Evolução Clínica
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="textarea-wrapper">
+            <textarea 
+              class="form-control" 
+              rows="12" 
+              placeholder="Descreva as queixas do paciente ou clique no microfone para transcrição inteligente por voz..."
+              [(ngModel)]="textoConsulta">
+            </textarea>
+            
+            <button 
+              class="btn-mic" 
+              [class.pulsing]="gravando"
+              [class.mic-recording]="gravando"
+              (click)="toggleGravacao()"
+              title="Gravar por voz">
+              <span class="material-icons">mic</span>
+            </button>
+          </div>
+          
+          <div class="action-row">
+            <button class="btn btn-primary btn-ia" (click)="simularAnaliseIA()" [disabled]="analisando || !textoConsulta">
+              <span class="material-icons" *ngIf="!analisando">psychology</span>
+              <span class="material-icons spinning" *ngIf="analisando">refresh</span>
+              {{ analisando ? 'Analisando dados...' : 'Analisar com IA' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Direita: Insights da IA -->
+    <div class="col-side">
+      <div class="card shadow h-full bg-slate-50">
+        <div class="card-header border-bottom">
+          <h2 class="card-title">
+            <span class="material-icons title-icon green">health_and_safety</span>
+            Sugestões Inteligentes (IA)
+          </h2>
+        </div>
+        <div class="card-body">
+          
+          <ng-container *ngIf="resultadosIA; else emptyState">
+            <div class="insights-stack">
+              <!-- Diagnóstico -->
+              <div class="insight-box box-blue">
+                <h3 class="insight-title">
+                  <span class="material-icons">stethoscope</span> 
+                  Diagnóstico / CID Sugerido
+                </h3>
+                <p class="insight-desc">
+                  {{ resultadosIA.doenca }} - <strong>{{ resultadosIA.cid }}</strong>
+                </p>
+              </div>
+
+              <!-- Sintomas -->
+              <div class="insight-box box-orange">
+                <h3 class="insight-title">
+                  <span class="material-icons">fact_check</span>
+                  Sintomas Identificados
+                </h3>
+                <ul class="insight-list">
+                  <li *ngFor="let s of resultadosIA.sintomas">{{ s }}</li>
+                </ul>
+              </div>
+
+              <!-- Exames -->
+              <div class="insight-box box-green">
+                <h3 class="insight-title">
+                  <span class="material-icons">description</span>
+                  Exames Recomendados
+                </h3>
+                <ul class="insight-list">
+                  <li *ngFor="let e of resultadosIA.exames">{{ e }}</li>
+                </ul>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #emptyState>
+             <div class="empty-state">
+                <span class="material-icons empty-icon">analytics</span>
+                <p>Preencha a anamnese e solicite a análise da IA para receber sugestões de diagnósticos, CID e conduta médica.</p>
+             </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer actions -->
+  <footer class="pep-footer">
+    <button class="btn btn-outline" (click)="textoConsulta = ''">Limpar</button>
+    <button class="btn btn-success btn-lg" (click)="salvarPEP()" [disabled]="!textoConsulta">
+      <span class="material-icons">task_alt</span>
+      Assinar e Salvar no PEP
+    </button>
+  </footer>
+
+</div>

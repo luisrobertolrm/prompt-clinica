@@ -1,0 +1,269 @@
+.pep-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.pep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.doctor-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.doctor-info {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.doctor-crm {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.info-icon {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.pep-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+@media (max-width: 992px) {
+  .pep-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shadow {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.title-icon {
+  font-size: 1.25rem;
+}
+.title-icon.blue { color: var(--primary); }
+.title-icon.green { color: var(--success); }
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  resize: vertical;
+  line-height: 1.5;
+  transition: all 0.2s;
+  background-color: #fafafa;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.btn-mic {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.btn-mic:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.mic-recording {
+  background-color: var(--danger) !important;
+}
+
+.pulsing {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.btn-ia {
+  background-color: #4f46e5; /* Indigo */
+}
+
+.bg-slate-50 {
+  background-color: #f8fafc;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.insights-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.insight-box {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.insight-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.insight-title .material-icons {
+  font-size: 1.125rem;
+}
+
+.insight-desc {
+  font-size: 0.875rem;
+  margin-left: 1.625rem;
+}
+
+.insight-list {
+  list-style-type: disc;
+  margin-left: 2.5rem;
+  font-size: 0.875rem;
+}
+
+.box-blue {
+  background-color: #eff6ff;
+  border-color: #dbeafe;
+  color: #1e3a8a;
+}
+
+.box-orange {
+  background-color: #fff7ed;
+  border-color: #ffedd5;
+  color: #9a3412;
+}
+
+.box-green {
+  background-color: #f0fdf4;
+  border-color: #dcfce3;
+  color: #166534;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.pep-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

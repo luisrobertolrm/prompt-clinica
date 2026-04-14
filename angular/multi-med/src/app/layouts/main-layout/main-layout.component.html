@@ -1,0 +1,54 @@
+<div class="layout-container">
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" (click)="toggleSidebar()">
+        <span class="material-icons">menu</span>
+      </button>
+      <div class="brand">
+        <span class="material-icons brand-icon">favorite_border</span>
+        <h1 class="brand-text">Multi Med</h1>
+      </div>
+    </div>
+    
+    <div class="topbar-right">
+      <div class="user-info">
+        <div class="user-text">
+          <span class="user-name">Dr. Roberto</span>
+          <span class="user-role" *ngIf="userProfile === 'medico'">Cardiologia</span>
+        </div>
+        <div class="avatar">
+          <img src="https://i.pravatar.cc/150?img=11" alt="Avatar Usuário">
+        </div>
+      </div>
+      <button class="btn-logout" [routerLink]="['/login']">
+        <span class="material-icons">logout</span>
+        <span class="logout-text">Sair</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Corpo Principal -->
+  <div class="layout-body">
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar" [class.sidebar-closed]="!isSidebarOpen">
+      <nav class="sidebar-nav">
+        <ul>
+          <li *ngFor="let item of filteredMenu">
+            <a [routerLink]="item.rota" routerLinkActive="active" class="nav-item">
+              <span class="material-icons nav-icon">{{ item.icone }}</span>
+              <span class="nav-text" *ngIf="isSidebarOpen">{{ item.titulo }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Área de Trabalho (Workspace) maximizada -->
+    <main class="workspace" [class.workspace-expanded]="!isSidebarOpen">
+      <div class="workspace-content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>
