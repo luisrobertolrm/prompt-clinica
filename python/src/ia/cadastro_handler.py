@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
@@ -6,6 +7,38 @@ from langchain_core.runnables import RunnableConfig
 from .graph import configure_graph_cadastro
 from .prompt import SYSTEM_MESSAGE_CADASTRO
 from .state import Cliente, State
+
+
+def validar_cpf(cpf: str) -> bool:
+    """Valida um CPF seguindo as regras de módulo 11."""
+    # Remove formatações se houver
+    cpf_limpo = re.sub(r'[^0-9]', '', str(cpf))
+
+    # Descarta se não for numérico (após limpeza) ou se não tiver 11 dígitos
+    if not cpf_limpo.isdigit() or len(cpf_limpo) != 11:
+        return False
+
+    # Exclui CPFs com todos os dígitos iguais (ex: 00000000000, 11111111111)
+    if cpf_limpo == cpf_limpo[0] * 11:
+        return False
+
+    # Validação do primeiro dígito verificador (Módulo 11)
+    soma = sum(int(cpf_limpo[i]) * (10 - i) for i in range(9))
+    resto = (soma * 10) % 11
+    digito_1 = 0 if resto == 10 else resto
+
+    if int(cpf_limpo[9]) != digito_1:
+        return False
+
+    # Validação do segundo dígito verificador (Módulo 11)
+    soma = sum(int(cpf_limpo[i]) * (11 - i) for i in range(10))
+    resto = (soma * 10) % 11
+    digito_2 = 0 if resto == 10 else resto
+
+    if int(cpf_limpo[10]) != digito_2:
+        return False
+
+    return True
 
 
 @dataclass
