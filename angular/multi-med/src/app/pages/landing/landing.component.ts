@@ -38,9 +38,9 @@ interface ChatResponse {
   styleUrl: './landing.component.css'
 })
 export class LandingComponent implements OnInit {
-  
+
   noticias: Noticia[] = [];
-  
+
   // Chat Widget
   isChatOpen: boolean = false;
   chatInput: string = '';
@@ -49,7 +49,7 @@ export class LandingComponent implements OnInit {
   paciente: string | null = null;
   opcao_escolhida: number | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.carregarNoticias();
@@ -59,15 +59,15 @@ export class LandingComponent implements OnInit {
   carregarNoticias() {
     this.http.get<Noticia[]>(`${environment.apiUrl}/noticias`).subscribe({
       next: (res) => {
-         this.noticias = res.slice(0, 4);
+        this.noticias = res.slice(0, 4);
       },
       error: () => {
-         // Fallback se API backend off
-         this.noticias = [
-           { titulo: 'Nova Ala Cardiológica Inaugurada', resumo: 'A Multi Med orgulha-se de entregar novos equipamentos para diagnósticos do coração de última geração.', data: '12 Abr 2026' },
-           { titulo: 'Campanha de Vacinação', resumo: 'Programe e atualize sua carteira de vacinação diretamente nas nossas dependências com agilidade.', data: '05 Abr 2026' },
-           { titulo: 'Dicas de Bem Estar', resumo: 'Confira 5 hábitos essenciais que profissionais formados recomendam para manter a longevidade intacta.', data: '22 Mar 2026' }
-         ];
+        // Fallback se API backend off
+        this.noticias = [
+          { titulo: 'Nova Ala Cardiológica Inaugurada', resumo: 'A Multi Med orgulha-se de entregar novos equipamentos para diagnósticos do coração de última geração.', data: '12 Abr 2026' },
+          { titulo: 'Campanha de Vacinação', resumo: 'Programe e atualize sua carteira de vacinação diretamente nas nossas dependências com agilidade.', data: '05 Abr 2026' },
+          { titulo: 'Dicas de Bem Estar', resumo: 'Confira 5 hábitos essenciais que profissionais formados recomendam para manter a longevidade intacta.', data: '22 Mar 2026' }
+        ];
       }
     });
   }
@@ -133,18 +133,18 @@ export class LandingComponent implements OnInit {
     this.http.post<ChatResponse>(chatUrl, req).subscribe({
       next: (res) => {
         this.isTyping = false;
-        
+
         if (res.paciente) {
-           this.paciente = res.paciente;
+          this.paciente = res.paciente;
         }
         if (res.opcao_escolhida !== undefined && res.opcao_escolhida !== null) {
-           this.opcao_escolhida = res.opcao_escolhida;
+          this.opcao_escolhida = res.opcao_escolhida;
         }
-        
+
         this.chatMessages.push({ origem: 'ia', texto: res.response });
         this.salvarHistoricoChat();
       },
-      error: () => {
+      error: (ex: any) => {
         this.isTyping = false;
         const fallbackResponse = this.evaluateSimpleIntent(txt);
         this.chatMessages.push({ origem: 'ia', texto: fallbackResponse });
@@ -156,10 +156,10 @@ export class LandingComponent implements OnInit {
   // Fallback engine puramente visual se a api local não bater IA.
   evaluateSimpleIntent(text: string): string {
     const low = text.toLowerCase();
-    if(low.includes('marcar') || low.includes('agendar')) {
+    if (low.includes('marcar') || low.includes('agendar')) {
       return 'Entendido! Para marcar sua consulta com segurança e ver a agenda completa, clique no botão superior "Entrar no Sistema". Estarei te esperando lá!';
     }
-    if(low.includes('cancelar') || low.includes('confirmar')) {
+    if (low.includes('cancelar') || low.includes('confirmar')) {
       return 'Para gerenciar seus agendamentos, será necessário realizar a autenticação. É rapidinho!';
     }
     return 'Sou uma Inteligência focada em atendimento. Aconselho você a Entrar no Sistema para que possamos trocar dados com segurança médica!';

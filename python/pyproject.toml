@@ -19,7 +19,7 @@ dependencies = [
     "sqlalchemy>=2.0.46",
     "pyright>=1.1.390",
     "ruff>=0.8.4",
-    "fastapi>=0.135.3",
+    "fastapi[standard]>=0.135.3",
     "uvicorn>=0.44.0",
 ]
 
