@@ -16,6 +16,20 @@ interface ChatMessage {
   texto: string;
 }
 
+interface ChatRequest {
+  message: string;
+  history: { role: string; content: string }[];
+  paciente?: string | null;
+  opcao_escolhida?: number | null;
+  thread_id: number;
+}
+
+interface ChatResponse {
+  response: string;
+  paciente?: string | null;
+  opcao_escolhida?: number | null;
+}
+
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -31,14 +45,15 @@ export class LandingComponent implements OnInit {
   isChatOpen: boolean = false;
   chatInput: string = '';
   isTyping: boolean = false;
-  chatMessages: ChatMessage[] = [
-    { origem: 'ia', texto: 'Olá! Sou a assistente virtual da Multi Med. Como posso te ajudar hoje? (ex: "Quero marcar uma consulta")' }
-  ];
+  chatMessages: ChatMessage[] = [];
+  paciente: string | null = null;
+  opcao_escolhida: number | null = null;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.carregarNoticias();
+    this.carregarHistoricoChat();
   }
 
   carregarNoticias() {
@@ -57,6 +72,35 @@ export class LandingComponent implements OnInit {
     });
   }
 
+  carregarHistoricoChat() {
+    const historico = sessionStorage.getItem('chatMessages');
+    if (historico) {
+      this.chatMessages = JSON.parse(historico);
+    } else {
+      this.chatMessages = [
+        { origem: 'ia', texto: 'Olá! Sou a assistente virtual da Multi Med. Como posso te ajudar hoje? (ex: "Quero marcar uma consulta")' }
+      ];
+    }
+    const paciente = sessionStorage.getItem('chatPaciente');
+    if (paciente) {
+      this.paciente = paciente;
+    }
+    const opcao = sessionStorage.getItem('chatOpcaoEscolhida');
+    if (opcao) {
+      this.opcao_escolhida = Number(opcao);
+    }
+  }
+
+  salvarHistoricoChat() {
+    sessionStorage.setItem('chatMessages', JSON.stringify(this.chatMessages));
+    if (this.paciente) {
+      sessionStorage.setItem('chatPaciente', this.paciente);
+    }
+    if (this.opcao_escolhida !== null) {
+      sessionStorage.setItem('chatOpcaoEscolhida', this.opcao_escolhida.toString());
+    }
+  }
+
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
   }
@@ -66,15 +110,47 @@ export class LandingComponent implements OnInit {
     if (!txt) return;
 
     this.chatMessages.push({ origem: 'user', texto: txt });
+    this.salvarHistoricoChat();
     this.chatInput = '';
     this.isTyping = true;
 
-    // Simulação do backend de IA (LLM / LangGraph fallback simulado por tempo)
-    setTimeout(() => {
-       this.isTyping = false;
-       const response = this.evaluateSimpleIntent(txt);
-       this.chatMessages.push({ origem: 'ia', texto: response });
-    }, 1500);
+    // Converter histórico para formato da API
+    const history = this.chatMessages.slice(0, -1).map(msg => ({
+      role: msg.origem === 'ia' ? 'assistant' : 'user',
+      content: msg.texto
+    }));
+
+    const req: ChatRequest = {
+      message: txt,
+      history: history,
+      paciente: this.paciente,
+      opcao_escolhida: this.opcao_escolhida,
+      thread_id: 2
+    };
+
+    const chatUrl = environment.apiUrl.replace(/\/api$/, '') + '/chat';
+
+    this.http.post<ChatResponse>(chatUrl, req).subscribe({
+      next: (res) => {
+        this.isTyping = false;
+        
+        if (res.paciente) {
+           this.paciente = res.paciente;
+        }
+        if (res.opcao_escolhida !== undefined && res.opcao_escolhida !== null) {
+           this.opcao_escolhida = res.opcao_escolhida;
+        }
+        
+        this.chatMessages.push({ origem: 'ia', texto: res.response });
+        this.salvarHistoricoChat();
+      },
+      error: () => {
+        this.isTyping = false;
+        const fallbackResponse = this.evaluateSimpleIntent(txt);
+        this.chatMessages.push({ origem: 'ia', texto: fallbackResponse });
+        this.salvarHistoricoChat();
+      }
+    });
   }
 
   // Fallback engine puramente visual se a api local não bater IA.
