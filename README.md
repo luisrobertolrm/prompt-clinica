@@ -35,6 +35,7 @@ DATABASE_URL="postgresql+psycopg2://postgres:post123%40@127.0.0.1:5432/clinica"
 ### 2. Rodando as Migrations do Banco (Alembic)
 Antes de testar qualquer funcionalidade, as tabelas devem estar criadas no PostgreSQL:
 
+*Senha post123@*
 ```bash
 cd python
 
@@ -52,7 +53,7 @@ Você pode subir a aplicação como uma **API da Web** (necessária para que o A
 - **Modo Servidor (FastAPI):**
   ```bash
   cd python
-  uv run fastapi dev src/web_api.py
+  uv run uvicorn src.web_api:app --reload --env-file=".env"
   ```
   *(A API vai subir no endereço http://127.0.0.1:8000)*
 
