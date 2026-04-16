@@ -110,7 +110,6 @@ export class LandingComponent implements OnInit {
     if (!txt) return;
 
     this.chatMessages.push({ origem: 'user', texto: txt });
-    this.salvarHistoricoChat();
     this.chatInput = '';
     this.isTyping = true;
 
@@ -142,13 +141,11 @@ export class LandingComponent implements OnInit {
         }
 
         this.chatMessages.push({ origem: 'ia', texto: res.response });
-        this.salvarHistoricoChat();
       },
       error: (ex: any) => {
         this.isTyping = false;
         const fallbackResponse = this.evaluateSimpleIntent(txt);
         this.chatMessages.push({ origem: 'ia', texto: fallbackResponse });
-        this.salvarHistoricoChat();
       }
     });
   }
