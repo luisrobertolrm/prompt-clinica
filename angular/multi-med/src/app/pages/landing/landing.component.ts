@@ -73,32 +73,11 @@ export class LandingComponent implements OnInit {
   }
 
   carregarHistoricoChat() {
-    const historico = sessionStorage.getItem('chatMessages');
-    if (historico) {
-      this.chatMessages = JSON.parse(historico);
-    } else {
-      this.chatMessages = [
-        { origem: 'ia', texto: 'Olá! Sou a assistente virtual da Multi Med. Como posso te ajudar hoje? (ex: "Quero marcar uma consulta")' }
-      ];
-    }
-    const paciente = sessionStorage.getItem('chatPaciente');
-    if (paciente) {
-      this.paciente = paciente;
-    }
-    const opcao = sessionStorage.getItem('chatOpcaoEscolhida');
-    if (opcao) {
-      this.opcao_escolhida = Number(opcao);
-    }
-  }
-
-  salvarHistoricoChat() {
-    sessionStorage.setItem('chatMessages', JSON.stringify(this.chatMessages));
-    if (this.paciente) {
-      sessionStorage.setItem('chatPaciente', this.paciente);
-    }
-    if (this.opcao_escolhida !== null) {
-      sessionStorage.setItem('chatOpcaoEscolhida', this.opcao_escolhida.toString());
-    }
+    this.chatMessages = [
+      { origem: 'ia', texto: 'Olá! Sou a assistente virtual da Multi Med. Como posso te ajudar hoje? (ex: "Quero marcar uma consulta")' }
+    ];
+    this.paciente = null;
+    this.opcao_escolhida = null;
   }
 
   toggleChat() {
