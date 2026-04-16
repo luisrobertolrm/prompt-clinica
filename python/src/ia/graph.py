@@ -1,6 +1,6 @@
 import json
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, Literal
 
 from langchain.tools import BaseTool
 from langchain_core.messages import SystemMessage, ToolMessage
@@ -37,6 +37,17 @@ def execute_llm(state: State) -> State:
 
 
 node_tool = ToolNode(TOOLS)
+
+def executou_consulta(state:State)  -> Literal["SIM", "NAO"]:
+    retorno = "NAO"
+    for msg in reversed(state.get("messages", [])):
+        if isinstance(msg, ToolMessage) and msg.name in {
+            "consultar_cliente"
+        }:
+            retorno = "SIM"
+            break
+
+    return retorno
 
 
 def atualizar_state_paciente_node(state: State) -> State:
@@ -91,10 +102,17 @@ def configure_graph_cadastro() -> CompiledStateGraph:
     config_graph.add_node("tools", node_tool)
     config_graph.add_node("atualizar_state_paciente", atualizar_state_paciente_node)
 
+
+
     config_graph.add_edge(START, "execute_llm")
     config_graph.add_conditional_edges("execute_llm", tools_condition, ["tools", END])
     config_graph.add_edge("tools", "atualizar_state_paciente")
-    config_graph.add_edge("atualizar_state_paciente", END)
+    config_graph.add_conditional_edges("atualizar_state_paciente", executou_consulta,
+                                       {
+                                           "SIM":"execute_llm",
+                                           "NAO":END
+                                       })
+    #config_graph.add_edge("atualizar_state_paciente", END)
 
     return config_graph.compile(checkpointer=InMemorySaver())
 

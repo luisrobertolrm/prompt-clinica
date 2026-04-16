@@ -47,6 +47,8 @@ class CadastroResponse:
 
     messages: list[BaseMessage]
     cliente: Cliente | None
+    consultouCliente: bool = False
+    cadastrouCliente:bool = False
 
 
 class CadastroHandler:
@@ -59,23 +61,37 @@ class CadastroHandler:
         self.graph = configure_graph_cadastro()
         self.is_first_interaction: bool = True
 
-    def processar_mensagem(self, mensagem_usuario: str) -> CadastroResponse:
+    def processar_mensagem(self, mensagem_usuario: str, history: list | None = None) -> CadastroResponse:
         """
         Processa uma mensagem do usuário e retorna resposta com dados do cliente.
 
         Args:
             mensagem_usuario: Texto enviado pelo usuário
+            history: Opcional histórico (para sistemas sem estado como REST API)
 
         Returns:
             CadastroResponse com mensagens e cliente (se encontrado/cadastrado)
         """
-        msg = HumanMessage(content=mensagem_usuario)
-
+        from langchain_core.messages import AIMessage
+        
+        current_messages = []
         if self.is_first_interaction:
-            current_messages = [SystemMessage(SYSTEM_MESSAGE_CADASTRO), msg]
+            current_messages.append(SystemMessage(SYSTEM_MESSAGE_CADASTRO))
             self.is_first_interaction = False
-        else:
-            current_messages = [msg]
+
+        if history:
+            for m in history:
+                role = getattr(m, "role", None) or (m.get("role") if isinstance(m, dict) else None)
+                content = getattr(m, "content", None) or (m.get("content") if isinstance(m, dict) else None)
+                
+                if role in ["user", "human"]:
+                    current_messages.append(HumanMessage(content=content))
+                elif role in ["assistant", "ai"]:
+                    current_messages.append(AIMessage(content=content))
+                elif role == "system":
+                    current_messages.append(SystemMessage(content=content))
+
+        current_messages.append(HumanMessage(content=mensagem_usuario))
 
         resp_llm = self.graph.invoke(
             State(messages=current_messages), config=self.config

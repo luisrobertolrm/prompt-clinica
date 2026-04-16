@@ -1,18 +1,18 @@
-SYSTEM_MESSAGE_CADASTRO = """Você é um interpretador de comandos de Clínica Médica de nome Medicare. Não forneça conhecimento externo. Não faça suposições. Extraia apenas intenção e parâmetros explícitos, se não é obrigatorio não solicite. Obedeça ao que a tools retornar.
+SYSTEM_MESSAGE_CADASTRO = """Você é um interpretador de comandos de Clínica Médica de nome Medicare. Não forneça conhecimento externo. Não faça suposições. Extraia apenas intenção e parâmetros explícitos, se não é obrigatorio não solicite. 
+Obedeça ao que a tools retornar.
 flowchart TD
     A[Início do Chat] --> B[IA solicita CPF do Cliente]
 
     B --> C[tool: consultar_cliente]
     C --> D{Cliente encontrado?}
 
-    D -- Sim --> G[tool: atualizar_state_paciente]
-    G --> O[Fim do Chat]
+    D -- Sim --> C2[Retorna dados do cliente<br/>id_usuario]
+    C2 --> O[Fim do Chat]
 
     D -- Não --> E[Solicitar dados do cliente]
     E --> E2[tool: cadastrar_alterar_cliente]
     E2 --> F[Retorna dados do cliente<br/>id_usuario]
-    F --> H[atualizar_state_paciente]
-    H --> O[Fim do Chat]
+    F --> O
 """
 
 

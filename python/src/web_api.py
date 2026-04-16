@@ -48,7 +48,7 @@ async def chat_endpoint(req: ChatRequest) -> ChatResponse:
     # Fase 1: Cadastro do Paciente
     if not req.paciente:
         handler = CadastroHandler(thread_id=req.thread_id)
-        response = handler.processar_mensagem(req.message)
+        response = handler.processar_mensagem(req.message, req.history)
         if response.cliente is not None:
             # Paciente cadastrado com sucesso!
             return ChatResponse(
@@ -67,12 +67,21 @@ async def chat_endpoint(req: ChatRequest) -> ChatResponse:
             graph = graph_factory(opcao)
             config = RunnableConfig(configurable={"thread_id": req.thread_id})
 
-            initial_messages = [
-                SystemMessage("Sempre tratar o paciente pelo nome"),
-                SystemMessage("Dados do paciente = " + req.paciente),
-            ]
+            langchain_messages = []
+            langchain_messages.append(SystemMessage("Sempre tratar o paciente pelo nome"))
+            langchain_messages.append(SystemMessage("Dados do paciente = " + req.paciente))
 
-            result = graph.invoke(State(messages=initial_messages), config=config)
+            for msg in req.history:
+                if msg.role in ["user", "human"]:
+                    langchain_messages.append(HumanMessage(content=msg.content))
+                elif msg.role in ["assistant", "ai"]:
+                    langchain_messages.append(AIMessage(content=msg.content))
+                elif msg.role == "system":
+                    langchain_messages.append(SystemMessage(content=msg.content))
+
+            langchain_messages.append(HumanMessage(content=req.message))
+
+            result = graph.invoke(State(messages=langchain_messages), config=config)
 
             return ChatResponse(
                 response=str(result["messages"][-1].content),
